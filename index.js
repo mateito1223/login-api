@@ -89,6 +89,16 @@ app.post('/login', async (req, res) => {
   }
 });
 
+const verificarToken = require('./middleware/Auth');
+
+// Ruta protegida: solo accesible con un token válido
+app.get('/perfil', verificarToken, (req, res) => {
+  res.json({
+    mensaje: 'Accediste a una ruta protegida',
+    usuario: req.usuario
+  });
+});
+
 app.listen(PORT, () => {
   console.log(`Servidor corriendo en http://localhost:${PORT}`);
 });
